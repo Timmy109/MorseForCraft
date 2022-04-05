@@ -1,0 +1,8 @@
+name: Blockchange
+version: '${project.version}'
+main: tim.lol.blockchange.Blockchange
+description: yeah sick
+commands:
+  morse:
+    description: yeah
+    usage: /block change
