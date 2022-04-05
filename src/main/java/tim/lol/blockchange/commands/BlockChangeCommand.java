@@ -5,11 +5,13 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitTask;
+import tim.lol.blockchange.Blockchange;
+
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class BlockChangeCommand implements CommandExecutor {
-
 
     public Integer x = 0;
     Block blockLocation = Bukkit.getWorld("creative").getBlockAt(-18, -60, 26);
@@ -32,63 +34,50 @@ public class BlockChangeCommand implements CommandExecutor {
             morse_array[i] = morse_message.charAt(i);
         }
 
-        int dit = 60;
+        long dit = 20;
 
         for (char symbol : morse_array) {
 
             if (symbol == '.') {
-                blockLocation.setType(Material.REDSTONE_LAMP_ON);
-                try {
-                    TimeUnit.MILLISECONDS.sleep(dit);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Bukkit.getScheduler().runTaskLater(Blockchange.getInstance(), () -> {
+                    blockLocation.setType(Material.REDSTONE_LAMP_ON);
+                }, dit);
 
-                blockLocation.setType(Material.REDSTONE_LAMP_OFF);
-                try {
-                    TimeUnit.MILLISECONDS.sleep(dit);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Bukkit.getScheduler().runTaskLater(Blockchange.getInstance(), () -> {
+                    blockLocation.setType(Material.REDSTONE_LAMP_OFF);
+                }, dit);
+
                 System.out.print("Low ");
 
             } else if (symbol == '-') {
 
-                blockLocation.setType(Material.REDSTONE_LAMP_ON);
-                try {
-                    TimeUnit.SECONDS.sleep(dit * 2);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Bukkit.getScheduler().runTaskLater(Blockchange.getInstance(), () -> {
+                    blockLocation.setType(Material.REDSTONE_LAMP_ON);
+                }, dit*2);
+
+                Bukkit.getScheduler().runTaskLater(Blockchange.getInstance(), () -> {
+                    blockLocation.setType(Material.REDSTONE_LAMP_OFF);
+                }, dit*2);
 
                 System.out.print("High ");
 
-                blockLocation.setType(Material.REDSTONE_LAMP_OFF);
-                try {
-                    TimeUnit.MILLISECONDS.sleep(dit * 2);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                System.out.print("High ");
             } else if (symbol == ' ') {
 
                 blockLocation.setType(Material.REDSTONE_LAMP_OFF);
-                try {
-                    TimeUnit.MILLISECONDS.sleep(dit * 3);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+                Bukkit.getScheduler().runTaskLater(Blockchange.getInstance(), () -> {
+                    blockLocation.setType(Material.REDSTONE_LAMP_OFF);
+                }, dit*3);
+
 
                 System.out.print("Space between letter ");
             } else if (symbol == '*') {
 
                 blockLocation.setType(Material.REDSTONE_LAMP_OFF);
-                try {
-                    TimeUnit.MILLISECONDS.sleep(dit * 7);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+                Bukkit.getScheduler().runTaskLater(Blockchange.getInstance(), () -> {
+                    blockLocation.setType(Material.REDSTONE_LAMP_OFF);
+                }, dit*7);
 
                 System.out.println("Space between word ");
             } else {
